@@ -10,6 +10,9 @@ ul {
 .left {
   float: left;
 }
+.right {
+  float: right;
+}
 #global {
   width: 100%;
   height: 100%;
