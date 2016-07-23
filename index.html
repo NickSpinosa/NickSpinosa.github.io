@@ -8,13 +8,14 @@
     <script src="data_generator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+    <script src="https://use.fontawesome.com/f511a3595c.js"></script>
 
   </head>
   <body>
     <div class="container">
 
       <div class="row top-buffer left col-sm-6">
-        <div class="col-sm-10">
+        <div class="col-sm-10" id="#twittle-wrapper">
           <h3 class="panel-title bottom-buffer" id="title"></h3>
           <ul id="feed" class="list-unstyled">
           </ul>
@@ -67,7 +68,9 @@
 
     <script type="text/template" id="twittle-template">
       <li class="panel panel-info">
-        <div class="panel-heading user">
+        <div class="panel-heading">
+          <div class="user"></div>
+          <button type="button" class="fa fa-plus-square-o expand-twittles"></button>
         </div>
         <div class="panel-body message">
         </div>

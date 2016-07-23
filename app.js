@@ -46,6 +46,11 @@ $("#new-twittle-submit").on("click",(e)=>{
   }
 })
 
+//event handling for viewing a user's tweets
+$(".user").on("click", function(){
+  console.log("clicked");
+});
+
 //log in validation
 $().ready(()=>{
     $("#form").validate({
