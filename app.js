@@ -13,17 +13,17 @@ twittlerApp.startStream = function(){
     // var $tweet = $('<div></div>');
     // $tweet.text('@' + tweet.user + ': ' + tweet.message);
     // $tweet.appendTo($body);
-    twittlerApp.render(tweet.message,"@" + tweet.user);
+    twittlerApp.render(tweet.message,"@" + tweet.user,"#feed");
     index -= 1;
   }
 }
 
 //function for cloning tweet html
-twittlerApp.render = function(message,user){
+twittlerApp.render = function(message,user,location){
   var newTwittle = $($("#twittle-template").html()).clone();
   newTwittle.find('.message').prepend(message);
   newTwittle.find('.user').prepend(user);
-  $("#feed").prepend(newTwittle);
+  $(location).prepend(newTwittle);
 };
 
 //event handling for assigning visitor variable and beginning twittle rendering
@@ -41,14 +41,22 @@ $("#log-in").on("click",()=>{
 $("#new-twittle-submit").on("click",(e)=>{
   e.preventDefault();
   if($("#new-twittle").valid()){
-    twittlerApp.render($("#twittleText").val(),"@" + visitor);
+    streams.users[visitor] = [];
+    writeTweet($("#twittleText").val());
+    twittlerApp.render($("#twittleText").val(),"@" + visitor,"#feed");
     $("#new-twittle")[0].reset();
   }
 })
 
 //event handling for viewing a user's tweets
-$(".user").on("click", function(){
-  console.log("clicked");
+$("#feed").on("click",".user", function(myThis){
+  $("#user-twittles").empty();
+  var user = $(this).html();
+  $(".modal-header #username").text(user +"'s Recent Tweets");
+  streams.users[user.substring(1)].forEach((item)=>{
+    twittlerApp.render(item.message,user,"#user-twittles");
+  });
+  $("#twittle-history").modal('show');
 });
 
 //log in validation

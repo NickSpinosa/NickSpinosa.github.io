@@ -66,11 +66,27 @@
         </div>
       </div>
 
+    <div class="modal fade" aria-hidden="true" aria-labelledby="twittle-history" id="twittle-history">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="username"></h4>
+          </div>
+          <div class="modal-body" id="user-twittles">
+            <ul class="list-unstyled">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script type="text/template" id="twittle-template">
       <li class="panel panel-info">
         <div class="panel-heading">
           <div class="user"></div>
-          <button type="button" class="fa fa-plus-square-o expand-twittles"></button>
         </div>
         <div class="panel-body message">
         </div>
