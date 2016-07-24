@@ -8,7 +8,7 @@
     <script src="data_generator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
-    <script src="https://use.fontawesome.com/f511a3595c.js"></script>
+    <script src="moment.min.js"></script>
 
   </head>
   <body>
@@ -69,7 +69,7 @@
     <div class="modal fade" aria-hidden="true" aria-labelledby="twittle-history" id="twittle-history">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" id="title">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -86,7 +86,8 @@
     <script type="text/template" id="twittle-template">
       <li class="panel panel-info">
         <div class="panel-heading">
-          <div class="user"></div>
+          <div class="user left"></div>
+          <div class="time right"></div>
         </div>
         <div class="panel-body message">
         </div>

@@ -1,6 +1,9 @@
 //strict typing
 "use strict";
 
+//ports in moment
+moment().format();
+
 //app object
 var twittlerApp = {};
 var visitor;
@@ -9,20 +12,21 @@ var visitor;
 twittlerApp.startStream = function(){
   var index = streams.home.length - 1;
   while(index >= 0){
-    var tweet = streams.home[index];
     // var $tweet = $('<div></div>');
     // $tweet.text('@' + tweet.user + ': ' + tweet.message);
     // $tweet.appendTo($body);
-    twittlerApp.render(tweet.message,"@" + tweet.user,"#feed");
+    twittlerApp.render(streams.home[index],"#feed");
     index -= 1;
   }
+  setTimeout(()=>{twittlerApp.startStream()},25000);
 }
 
 //function for cloning tweet html
-twittlerApp.render = function(message,user,location){
+twittlerApp.render = function(tweet,location){
   var newTwittle = $($("#twittle-template").html()).clone();
-  newTwittle.find('.message').prepend(message);
-  newTwittle.find('.user').prepend(user);
+  newTwittle.find('.message').prepend(tweet.message);
+  newTwittle.find('.user').prepend("@" + tweet.user);
+  newTwittle.find('.time').prepend(moment(tweet.created_at).fromNow());
   $(location).prepend(newTwittle);
 };
 
@@ -30,6 +34,7 @@ twittlerApp.render = function(message,user,location){
 $("#log-in").on("click",()=>{
   if($("#form").valid()){
     visitor = $("#username").val();
+    streams.users[visitor] = [];
     $("#form")[0].reset();
     $("#title").html("@" + visitor + "'s feed");
     $("#login-modal").hide();
@@ -41,9 +46,8 @@ $("#log-in").on("click",()=>{
 $("#new-twittle-submit").on("click",(e)=>{
   e.preventDefault();
   if($("#new-twittle").valid()){
-    streams.users[visitor] = [];
     writeTweet($("#twittleText").val());
-    twittlerApp.render($("#twittleText").val(),"@" + visitor,"#feed");
+    twittlerApp.render(streams.users[visitor][streams.users[visitor].length-1],"#feed");
     $("#new-twittle")[0].reset();
   }
 })
@@ -52,9 +56,9 @@ $("#new-twittle-submit").on("click",(e)=>{
 $("#feed").on("click",".user", function(myThis){
   $("#user-twittles").empty();
   var user = $(this).html();
-  $(".modal-header #username").text(user +"'s Recent Tweets");
+  $(".modal-header #username").text(user +"'s Recent Twittles");
   streams.users[user.substring(1)].forEach((item)=>{
-    twittlerApp.render(item.message,user,"#user-twittles");
+    twittlerApp.render(item,"#user-twittles");
   });
   $("#twittle-history").modal('show');
 });
