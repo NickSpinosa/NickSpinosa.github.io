@@ -4,7 +4,7 @@
 //ports in moment
 moment().format();
 
-//app object
+//data structures
 var twittlerApp = {};
 var visitor;
 
@@ -12,16 +12,12 @@ var visitor;
 twittlerApp.startStream = function(){
   var index = streams.home.length - 1;
   while(index >= 0){
-    // var $tweet = $('<div></div>');
-    // $tweet.text('@' + tweet.user + ': ' + tweet.message);
-    // $tweet.appendTo($body);
     twittlerApp.render(streams.home[index],"#feed");
     index -= 1;
   }
-  setTimeout(()=>{twittlerApp.startStream()},25000);
 }
 
-//function for cloning tweet html
+//method for cloning tweet html
 twittlerApp.render = function(tweet,location){
   var newTwittle = $($("#twittle-template").html()).clone();
   newTwittle.find('.message').prepend(tweet.message);
@@ -29,6 +25,12 @@ twittlerApp.render = function(tweet,location){
   newTwittle.find('.time').prepend(moment(tweet.created_at).fromNow());
   $(location).prepend(newTwittle);
 };
+
+//method for generating and rendering new random twittles
+twittlerApp.generateTwittle = function(){
+  twittlerApp.render(generateRandomTweet(),"#feed");
+  setTimeout(twittlerApp.generateTwittle, Math.random() * 5000);
+}
 
 //event handling for assigning visitor variable and beginning twittle rendering
 $("#log-in").on("click",()=>{
@@ -39,6 +41,7 @@ $("#log-in").on("click",()=>{
     $("#title").html("@" + visitor + "'s feed");
     $("#login-modal").hide();
     twittlerApp.startStream();
+    twittlerApp.generateTwittle();
   }
 })
 

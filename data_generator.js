@@ -38,12 +38,14 @@ var randomMessage = function(){
 };
 
 // generate random tweets on a random schedule
+// adds a return so it can be called later
 var generateRandomTweet = function(){
   var tweet = {};
   tweet.user = randomElement(users);
   tweet.message = randomMessage();
   tweet.created_at = new Date();
   addTweet(tweet);
+  return tweet;
 };
 
 for(var i = 0; i < 10; i++){
@@ -54,7 +56,8 @@ var scheduleNextTweet = function(){
   generateRandomTweet();
   setTimeout(scheduleNextTweet, Math.random() * 5000);
 };
-scheduleNextTweet();
+//remove the invocation of scheduleNextTweet so i can invoke my version
+//scheduleNextTweet();
 
 // utility function for letting students add "write a tweet" functionality
 // (note: not used by the rest of this file.)
