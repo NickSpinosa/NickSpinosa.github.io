@@ -17,12 +17,12 @@ twittlerApp.startStream = function(){
   }
 }
 
-//method for cloning tweet html
+//method for cloning and appending tweet html
 twittlerApp.render = function(tweet,location){
   var newTwittle = $($("#twittle-template").html()).clone();
   newTwittle.find('.message').prepend(tweet.message);
   newTwittle.find('.user').prepend("@" + tweet.user);
-  newTwittle.find('.time').prepend(moment(tweet.created_at).fromNow());
+  newTwittle.find('.timeago').livestamp(tweet.created_at);
   $(location).prepend(newTwittle);
 };
 
@@ -30,6 +30,12 @@ twittlerApp.render = function(tweet,location){
 twittlerApp.generateTwittle = function(){
   twittlerApp.render(generateRandomTweet(),"#feed");
   setTimeout(twittlerApp.generateTwittle, Math.random() * 5000);
+}
+
+//method for updating time with moment.js
+twittlerApp.updateTime = function(time){
+  return moment(time).fromNow();
+  setTimeout(twittlerApp.updateTime, 25000,time);
 }
 
 //event handling for assigning visitor variable and beginning twittle rendering
